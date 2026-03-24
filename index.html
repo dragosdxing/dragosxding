@@ -6,7 +6,6 @@
     <title>Dragoș DXing - Home</title>
     
     <style>
-        /* Incarcam fonturile tale locale */
         @font-face {
             font-family: 'CyGrotesk';
             src: url('CyGrotesk-GrandLight.otf') format('opentype');
@@ -16,13 +15,11 @@
 
         @font-face {
             font-family: 'LCDPhone';
-            /* Corectat extensia cu majuscule fix cum e fisierul tau */
             src: url('LCDPHONE.TTF') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
 
-        /* Fundal cu poza ta si filtru intunecat */
         body {
             background: linear-gradient(rgba(5, 5, 8, 0.85), rgba(5, 5, 8, 0.95)), 
                         url('pnt.jpg') no-repeat center center fixed;
@@ -32,36 +29,25 @@
             margin: 0;
             padding: 0;
             -webkit-font-smoothing: antialiased;
-            /* Umbra subtila pentru tot textul grotesk, sa ii dea adancime */
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
         }
 
-        /* Navigatia de sus (Glassmorphism) */
+        /* Navbar */
         .navbar {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(10, 10, 15, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            flex-wrap: wrap; /* Pentru mobile */
         }
 
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            height: 40px; 
-            width: auto;
-        }
-
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        .logo { height: 40px; width: auto; }
         .nav-brand {
             font-size: 26px;
             letter-spacing: 1.5px;
@@ -69,155 +55,122 @@
             background: linear-gradient(90deg, #00ff00, #00cc00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Pentru text cu gradient, umbra trebuie aplicata altfel cu filter drop-shadow, dar pastram aspectul clean */
             filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
-        }
-
-        .nav-center {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         .nav-center a {
             color: #dddddd;
             text-decoration: none;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-center a:hover {
-            color: #00ff00;
-            background: rgba(0, 255, 0, 0.1);
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
-        }
-
-        .nav-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
             font-size: 15px;
-            color: #aaaaaa;
+            text-transform: uppercase;
+            margin: 0 10px;
+            transition: 0.3s;
         }
+        .nav-center a:hover { color: #00ff00; }
 
-        /* Setari pentru noul font LCD */
+        .nav-right { text-align: right; }
         .clock {
             font-family: 'LCDPhone', monospace;
             font-size: 28px;
             color: #00ff00;
-            letter-spacing: 2px;
-            /* Suprascriem umbra globala si punem un efect specific de display stralucitor */
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.6), 1px 1px 2px rgba(0,0,0,0.8);
-            margin-bottom: 5px;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+        }
+        .weather { color: #ffd93d; font-size: 14px; }
+
+        /* Main Layout Grid */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .weather {
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Stânga mic, Dreapta (video) mare */
+            gap: 25px;
+            align-items: start;
+        }
+
+        /* Panoul din Stânga (Noul conținut) */
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .status-live {
             display: flex;
             align-items: center;
-            gap: 5px;
-            color: #ffd93d;
-            font-family: 'CyGrotesk', sans-serif;
-            font-size: 16px;
-        }
-
-        /* Sectiunea Principala */
-        .main-container {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .welcome-title {
-            font-size: 42px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.7);
-        }
-
-        .welcome-subtitle {
-            font-size: 18px;
-            color: #aaaaaa;
-            margin-bottom: 50px;
+            gap: 10px;
+            font-size: 14px;
             letter-spacing: 1px;
+            color: #00ff00;
         }
 
-        /* Sectiunea YouTube */
+        .dot {
+            height: 10px;
+            width: 10px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+
+        .card-title {
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #aaaaaa;
+        }
+
+        .stats-val { color: #00ff00; font-family: 'LCDPhone'; }
+
+        /* YouTube Section */
         .yt-section {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+            padding: 20px;
         }
 
-        .yt-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .yt-title {
-            font-size: 24px;
-            color: #ff0000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .yt-btn {
-            background: #ff0000;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 16px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            letter-spacing: 1px;
-            text-shadow: none; /* Aici nu e nevoie de shadow */
-        }
-
-        .yt-btn:hover {
-            background: #cc0000;
-            box-shadow: 0 5px 15px rgba(255,0,0,0.4);
-            transform: translateY(-2px);
-        }
-
-        /* Wrapper pt iframe ca sa ramana perfect proportional */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* Raport 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
-            overflow: hidden;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            overflow: hidden;
         }
 
         .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* Responsiveness pentru mobile */
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; gap: 15px; text-align: center; }
-            .nav-right { align-items: center; }
-            .welcome-title { font-size: 32px; }
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -228,92 +181,80 @@
             <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
             <div class="nav-brand">Dragoș DXing</div>
         </div>
-        
         <div class="nav-center">
-            <a href="https://dragosdxing.github.io/info-fm/" target="_blank">Info FM</a>
-            <a href="https://dragosdxing.github.io/fm-map/" target="_blank">FM Map</a>
-            <a href="https://servers.fmdx.org/" target="_blank">Servere TEF</a>
-            <a href="https://www.facebook.com/groups/1165433140982652/" target="_blank">Grup Facebook</a>
-            <a href="https://dragosconstantin20.blogspot.com/" target="_blank" style="color: #ff6b6b;">Vechiul Blog</a>
+            <a href="https://dragosdxing.github.io/info-fm/">Info FM</a>
+            <a href="https://dragosdxing.github.io/fm-map/">FM Map</a>
+            <a href="https://servers.fmdx.org/">TEF</a>
         </div>
-
         <div class="nav-right">
             <div class="clock" id="clock">00:00:00</div>
-            <div class="weather" id="weather">🌤️ Se caută locația...</div>
+            <div class="weather" id="weather">Se încarcă locația...</div>
         </div>
     </nav>
 
     <div class="main-container">
-        <div class="welcome-title">Bine ai venit pe Hub-ul DXing</div>
-        <div class="welcome-subtitle">Explorarea spectrului radio FM din România și Republica Moldova</div>
-
-        <div class="yt-section">
-            <div class="yt-header">
-                <div class="yt-title">
-                    ▶️ CELE MAI NOI CLIPURI
-                </div>
-                <a href="https://www.youtube.com/@dragosdxing?sub_confirmation=1" target="_blank" class="yt-btn">
-                    Abonează-te pe YouTube
-                </a>
-            </div>
+        <div class="hero-grid">
             
-            <div class="video-container">
-                <iframe width="1345" height="759" src="https://www.youtube.com/embed/sw_1-6ULZck" title="10 LUCRURI IMPORTANTE IN FM DX / 10 IMPORTANT THINGS IN FM DX" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="side-panel">
+                <div class="info-card">
+                    <div class="status-live"><span class="dot"></span> DX MONITOR ACTIVE</div>
+                    <div style="font-size: 12px; color: #888; margin-top: 5px;">Scanning FM Frequencies...</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-title">Radio Signal Stats</div>
+                    <div class="stats-row"><span>Propagare:</span> <span class="stats-val">NORMAL</span></div>
+                    <div class="stats-row"><span>S-Meter:</span> <span class="stats-val">S9+10dB</span></div>
+                    <div class="stats-row"><span>SNR:</span> <span class="stats-val">42 dB</span></div>
+                    <div class="stats-row"><span>Locație DX:</span> <span id="loc-display" style="color:#ffd93d;">RO</span></div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-title">Quick Links</div>
+                    <a href="https://www.facebook.com/groups/1165433140982652/" style="color:#00ff00; text-decoration:none; font-size:14px;">→ Comunitatea Facebook</a><br>
+                    <a href="https://dragosconstantin20.blogspot.com/" style="color:#ff6b6b; text-decoration:none; font-size:14px; margin-top:10px; display:inline-block;">→ Vechiul Blog</a>
+                </div>
             </div>
+
+            <div class="yt-section">
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
+                    <span style="color:#ff0000; font-weight:bold;">YOUTUBE LATEST</span>
+                    <a href="https://www.youtube.com/@dragosdxing" class="yt-btn" style="background:#ff0000; color:white; padding:5px 10px; border-radius:4px; text-decoration:none; font-size:12px;">SUBSCRIBE</a>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/sw_1-6ULZck" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // --- 1. Script pentru Ceas Live ---
         function updateClock() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('ro-RO', { hour12: false });
-            document.getElementById('clock').textContent = timeString;
+            document.getElementById('clock').textContent = now.toLocaleTimeString('ro-RO', { hour12: false });
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // --- 2. Script pentru Vreme si Locatie (Fara cheie de API) ---
-        function getWeather() {
+        async function getWeather() {
             const weatherEl = document.getElementById('weather');
-
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(async function(position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    const { latitude: lat, longitude: lon } = pos.coords;
+                    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+                    const data = await res.json();
                     
-                    try {
-                        // Extragem temperatura de la Open-Meteo
-                        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-                        const data = await response.json();
-                        const temp = data.current_weather.temperature;
-                        
-                        // Extragem numele orasului folosind coordonatele
-                        let oras = "Local";
-                        try {
-                            const geoRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ro`);
-                            const geoData = await geoRes.json();
-                            oras = geoData.city || geoData.locality || "Locație activă";
-                        } catch (e) {
-                            console.log("Locatia nu a putut fi decodata exact.");
-                        }
-
-                        // Afisam rezultatul
-                        weatherEl.innerHTML = `📍 ${oras} | 🌡️ ${temp}°C`;
-                    } catch (error) {
-                        weatherEl.innerHTML = `❌ Eroare conexiune`;
-                    }
-                }, function(error) {
-                    // Daca utilizatorul da Block la cererea de locatie
-                    weatherEl.innerHTML = `📍 Locație ascunsă`;
-                });
-            } else {
-                weatherEl.innerHTML = `Nu este suportat`;
+                    const geoRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ro`);
+                    const geoData = await geoRes.json();
+                    
+                    const oras = geoData.city || geoData.locality || "România";
+                    weatherEl.innerHTML = `📍 ${oras} | 🌡️ ${data.current_weather.temperature}°C`;
+                    document.getElementById('loc-display').textContent = oras.toUpperCase();
+                }, () => { weatherEl.innerHTML = "Locație indisponibilă"; });
             }
         }
-        
         getWeather();
     </script>
-
 </body>
 </html>
